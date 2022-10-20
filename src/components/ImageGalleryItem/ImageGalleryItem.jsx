@@ -6,6 +6,7 @@ export const ImageGalleryItem = () => {
   return (
     <ImageItemStyled>
       <p>this is image item</p>
+      {/* <img src="" alt="" /> */}
     </ImageItemStyled>
   );
 };

@@ -1,4 +1,4 @@
-import { IconButton } from 'components/IconButton/IconButton';
+import { Button } from 'components/Button/Button';
 import { ImageGallery } from 'components/ImageGallery/ImageGallery';
 import { SearchBar } from 'components/Searchbar/Searchbar';
 import React, { Component } from 'react';
@@ -10,6 +10,7 @@ export class App extends Component {
       <Container>
         <SearchBar />
         <ImageGallery />
+        <Button />
       </Container>
     );
   }

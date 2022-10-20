@@ -9,12 +9,15 @@ export class SearchBar extends Component {
     return (
       <SearchBarStyled>
         <Form>
-          <IconButton aria-label="Add Todo">
+          <IconButton aria-label="search photo">
             <IconSearch width="40px" height="40px" />
           </IconButton>
-          <Label>
-            <Input placeholder="Search" />
-          </Label>
+          <Input
+            type="text"
+            autoComplete="off"
+            autoFocus
+            placeholder="Search images and photos"
+          />
         </Form>
       </SearchBarStyled>
     );

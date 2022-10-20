@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-export const SearchBarStyled = styled.div`
+export const SearchBarStyled = styled.header`
   top: 0;
   left: 0;
   position: sticky;
@@ -29,12 +29,9 @@ export const Form = styled.form`
   overflow: hidden;
 `;
 
-export const Label = styled.label`
+export const Input = styled.input`
   width: 100%;
   padding-right: 20px;
-`;
-
-export const Input = styled.input`
   display: inline-block;
   width: 100%;
   font: inherit;

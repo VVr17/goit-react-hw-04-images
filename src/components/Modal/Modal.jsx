@@ -6,7 +6,7 @@ export class Modal extends Component {
   render() {
     return (
       <Overlay>
-        <ModalStyled />
+        <ModalStyled>{/* <img src="" alt="" /> */}</ModalStyled>
       </Overlay>
     );
   }
