@@ -5,8 +5,17 @@ import css from './IconButton.module.css';
 
 // ! add aria-label
 
-export const IconButton = ({ children }) => {
-  return <button className={css.searchFormButton}>{children}</button>;
+export const IconButton = ({ children, ...allyProps }) => {
+  return (
+    <button
+      className={css.searchFormButton}
+      type="submit"
+      aria-label="submit search query"
+      {...allyProps}
+    >
+      {children}
+    </button>
+  );
 };
 
 // IconButton.propTypes = {};
