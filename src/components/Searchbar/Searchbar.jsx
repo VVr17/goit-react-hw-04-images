@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Input, SearchBarStyled } from './Searchbar.styled';
 import { IconButton } from 'components/IconButton/IconButton';
 import { ReactComponent as IconSearch } from '../../icons/search.svg';
+import css from './Searchbar.module.css';
 
 export class SearchBar extends Component {
   state = {
@@ -30,12 +30,13 @@ export class SearchBar extends Component {
     const { query } = this.state;
 
     return (
-      <SearchBarStyled>
-        <Form onSubmit={this.handleSubmit}>
+      <header className={css.searchBar}>
+        <form className={css.searchForm} onSubmit={this.handleSubmit}>
           <IconButton aria-label="search photo">
             <IconSearch width="40px" height="40px" />
           </IconButton>
-          <Input
+          <input
+            className={css.searchFormInput}
             type="text"
             autoComplete="off"
             autoFocus
@@ -43,8 +44,8 @@ export class SearchBar extends Component {
             onChange={this.handleChange}
             placeholder="Search images and photos"
           />
-        </Form>
-      </SearchBarStyled>
+        </form>
+      </header>
     );
   }
 }

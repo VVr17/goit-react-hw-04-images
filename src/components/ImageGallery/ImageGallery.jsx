@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { ImageGalleryList } from './ImageGallery.styled';
+// import { ImageGalleryList } from './ImageGallery.styled';
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
 import { Api } from 'components/services/Api';
+import css from './ImageGallery.module.css';
 
 const api = new Api();
 
@@ -58,13 +59,13 @@ export class ImageGallery extends Component {
 
     if (status === 'resolved') {
       return (
-        <ImageGalleryList>
+        <ul className={css.imageGallery}>
           <h2>This is images from API</h2>
           {images.map(image => {
             console.log('image', image);
             return <ImageGalleryItem key={image.id} />;
           })}
-        </ImageGalleryList>
+        </ul>
       );
     }
   }

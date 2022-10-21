@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { ModalStyled, Overlay } from './Modal.styled';
+// import PropTypes from 'prop-types';
+import css from './Modal.module.css';
 
 export class Modal extends Component {
   render() {
     return (
-      <Overlay>
-        <ModalStyled>{/* <img src="" alt="" /> */}</ModalStyled>
-      </Overlay>
+      <div className={css.overlay}>
+        <div className={css.modal}>{/* <img src="" alt="" /> */}</div>
+      </div>
     );
   }
 }
 
-Modal.propTypes = {};
+// Modal.propTypes = {};

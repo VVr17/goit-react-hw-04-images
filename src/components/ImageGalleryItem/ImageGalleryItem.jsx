@@ -1,13 +1,13 @@
 // import React, { Component } from 'react';
 // import PropTypes from 'prop-types';
-import { ImageItemStyled } from './ImageGalleryItem.styled';
+import css from './ImageGalleryItem.module.css';
 
 export const ImageGalleryItem = () => {
   return (
-    <ImageItemStyled>
+    <li className={css.imageGalleryItem}>
       <p>this is image item</p>
-      {/* <img src="" alt="" /> */}
-    </ImageItemStyled>
+      {/* <img className={css.imageGalleryItemImage} src="" alt="" /> */}
+    </li>
   );
 };
 

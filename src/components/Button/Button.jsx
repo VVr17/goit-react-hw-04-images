@@ -1,5 +1,8 @@
-import { ButtonStyled } from './Button.styled';
+// import { ButtonStyled } from './Button.styled';
+import css from './Button.module.css';
 
-export const Button = ({ children }) => <ButtonStyled>{children}</ButtonStyled>;
+export const Button = ({ children }) => (
+  <button className={css.button}>{children}</button>
+);
 
 Button.propTypes = {};
