@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// import React, { Component } from 'react';
+// import PropTypes from 'prop-types';
 import { ImageItemStyled } from './ImageGalleryItem.styled';
 
 export const ImageGalleryItem = () => {
@@ -11,4 +11,4 @@ export const ImageGalleryItem = () => {
   );
 };
 
-ImageGalleryItem.propTypes = {};
+// ImageGalleryItem.propTypes = {};
