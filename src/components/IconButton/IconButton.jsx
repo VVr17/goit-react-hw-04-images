@@ -3,11 +3,12 @@
 // import { IconButtonStyled } from './IconButton.styled';
 import css from './IconButton.module.css';
 
-export const IconButton = ({ children, ...allyProps }) => {
+export const IconButton = ({ children, disabled = false, ...allyProps }) => {
   return (
     <button
       className={css.searchFormButton}
       type="submit"
+      disabled={disabled}
       aria-label="submit search query"
       {...allyProps}
     >
