@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import { ImageGalleryList } from './ImageGallery.styled';
-import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
+import { ThreeDots } from 'react-loader-spinner';
 import { Api } from 'components/services/Api';
+import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
 import css from './ImageGallery.module.css';
 
 const api = new Api();
@@ -46,25 +46,38 @@ export class ImageGallery extends Component {
     const { images, status, error } = this.state;
 
     if (status === 'idle') {
-      return <h2>Please, enter your request</h2>;
+      return <h2 className={css.galleryText}>Please, enter your request</h2>;
     }
 
     if (status === 'pending') {
-      return <h2>Pending...........</h2>;
+      return (
+        <div className={css.spinner}>
+          <ThreeDots
+            height="80"
+            width="80"
+            radius="9"
+            color="#3f51b5"
+            ariaLabel="three-dots-loading"
+            visible={true}
+          />
+        </div>
+      );
     }
 
     if (status === 'rejected') {
-      return <h2>{error.message}</h2>;
+      return <h2 className={css.galleryText}>{error.message}</h2>;
     }
 
     if (status === 'resolved') {
       return (
         <ul className={css.imageGallery}>
-          <h2>This is images from API</h2>
-          {images.map(image => {
-            console.log('image', image);
-            return <ImageGalleryItem key={image.id} />;
-          })}
+          {images.map(({ id, webformatURL, tags }) => (
+            <ImageGalleryItem
+              key={id}
+              previewImage={webformatURL}
+              tags={tags}
+            />
+          ))}
         </ul>
       );
     }

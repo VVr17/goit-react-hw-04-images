@@ -16,7 +16,7 @@ export class SearchBar extends Component {
   handleSubmit = event => {
     event.preventDefault();
     const query = this.state.query.trim();
-    if (!query) return alert('field cannot be empty');
+    if (!query) return alert('Field cannot be empty');
 
     this.props.onSubmit(query);
     this.resetForm();

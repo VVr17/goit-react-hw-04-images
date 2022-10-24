@@ -3,8 +3,6 @@
 // import { IconButtonStyled } from './IconButton.styled';
 import css from './IconButton.module.css';
 
-// ! add aria-label
-
 export const IconButton = ({ children, ...allyProps }) => {
   return (
     <button

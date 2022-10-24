@@ -1,14 +1,19 @@
-// import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import css from './ImageGalleryItem.module.css';
 
-export const ImageGalleryItem = () => {
+export const ImageGalleryItem = ({ previewImage, tags }) => {
   return (
     <li className={css.imageGalleryItem}>
-      <p>this is image item</p>
-      {/* <img className={css.imageGalleryItemImage} src="" alt="" /> */}
+      <img
+        className={css.imageGalleryItemImage}
+        src={previewImage}
+        alt={tags}
+      />
     </li>
   );
 };
 
-// ImageGalleryItem.propTypes = {};
+ImageGalleryItem.propTypes = {
+  previewImage: PropTypes.string.isRequired,
+  tags: PropTypes.string.isRequired,
+};

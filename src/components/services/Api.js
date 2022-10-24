@@ -14,13 +14,13 @@ export class Api {
         this.#API_KEY
       }&image_type=photo&orientation=horizontal&per_page=${this.perPage}`
     );
-    if (response.ok) {
-      return await response.json();
+    if (!response.ok) {
+      throw new Error(
+        'There are no images found for your request. Please, try again'
+      );
     }
 
-    throw new Error(
-      'There are no images found for your request. Please, try again'
-    );
+    return await response.json();
   }
 
   incrementPage() {
