@@ -3,14 +3,13 @@ export class Api {
   #BASE_URL = 'https://pixabay.com/api/';
 
   constructor() {
-    this.page = 1;
     this.perPage = 12;
     this.remainPages = 0;
   }
 
-  async fetchImages(query) {
+  async fetchImages(query, page = 1) {
     const response = await fetch(
-      `${this.#BASE_URL}?q=${query}&page=${this.page}&key=${
+      `${this.#BASE_URL}?q=${query}&page=${page}&key=${
         this.#API_KEY
       }&image_type=photo&orientation=horizontal&per_page=${this.perPage}`
     );
@@ -21,19 +20,5 @@ export class Api {
     }
 
     return await response.json();
-  }
-
-  incrementPage() {
-    this.page += 1;
-  }
-
-  countRemainPages(totalPictures) {
-    this.remainPages =
-      Math.ceil(totalPictures / this.picturesPerPage) - this.page;
-  }
-
-  resetPageAndCounter() {
-    this.page = 1;
-    this.remainPages = 0;
   }
 }

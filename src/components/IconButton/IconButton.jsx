@@ -1,15 +1,17 @@
-// import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
-// import { IconButtonStyled } from './IconButton.styled';
+import PropTypes from 'prop-types';
 import css from './IconButton.module.css';
 
-export const IconButton = ({ children, disabled = false, ...allyProps }) => {
+export const IconButton = ({
+  children,
+  type = 'submit',
+  disabled = false,
+  ...allyProps
+}) => {
   return (
     <button
       className={css.searchFormButton}
-      type="submit"
+      type={type}
       disabled={disabled}
-      aria-label="submit search query"
       {...allyProps}
     >
       {children}
@@ -17,4 +19,8 @@ export const IconButton = ({ children, disabled = false, ...allyProps }) => {
   );
 };
 
-// IconButton.propTypes = {};
+IconButton.propTypes = {
+  disabled: PropTypes.bool,
+  type: PropTypes.string,
+  'aria-label': PropTypes.string.isRequired,
+};

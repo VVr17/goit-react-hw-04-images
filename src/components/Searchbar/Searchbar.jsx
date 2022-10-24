@@ -33,7 +33,7 @@ export class SearchBar extends Component {
     return (
       <header className={css.searchBar}>
         <form className={css.searchForm} onSubmit={this.handleSubmit}>
-          <IconButton aria-label="search photo" disabled={isPending}>
+          <IconButton aria-label="submit search query" disabled={isPending}>
             <IconSearch width="40px" height="40px" />
           </IconButton>
           <input
