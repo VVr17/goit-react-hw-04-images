@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Api } from 'components/services/Api';
 import { Button } from 'components/Button/Button';
 import { ImageGallery } from 'components/ImageGallery/ImageGallery';
+import { Loader } from 'components/Loader/Loader';
 import { SearchBar } from 'components/Searchbar/Searchbar';
-import { ThreeDots } from 'react-loader-spinner';
 import css from './App.module.css';
 
 const api = new Api();
@@ -21,8 +21,8 @@ export class App extends Component {
     query: '',
     images: [],
     error: null,
-    status: STATUS.idle,
     loadBtnIsShown: false,
+    status: STATUS.idle,
   };
 
   async componentDidUpdate(_, prevState) {
@@ -75,7 +75,7 @@ export class App extends Component {
       <div className={css.app}>
         <SearchBar
           onSubmit={this.onFormSubmit}
-          isPending={status === STATUS.pending}
+          isSubmitting={status === STATUS.pending}
         />
 
         {status === 'idle' && (
@@ -86,15 +86,7 @@ export class App extends Component {
           <ImageGallery images={images} />
         )}
 
-        {status === 'pending' && (
-          <div className={css.spinner}>
-            <ThreeDots color="#013220" ariaLabel="three-dots-loading" />
-          </div>
-        )}
-
-        {/* {status === 'resolved' && (
-          <Button onClick={this.onLoadBtnClick}>Load More</Button>
-        )} */}
+        {status === 'pending' && <Loader />}
 
         {loadBtnIsShown && (
           <Button onClick={this.onLoadBtnClick}>Load More</Button>

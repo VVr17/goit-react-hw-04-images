@@ -28,12 +28,12 @@ export class SearchBar extends Component {
 
   render() {
     const { query } = this.state;
-    const { isPending } = this.props;
+    const { isSubmitting } = this.props;
 
     return (
       <header className={css.searchBar}>
         <form className={css.searchForm} onSubmit={this.handleSubmit}>
-          <IconButton aria-label="submit search query" disabled={isPending}>
+          <IconButton aria-label="submit search query" disabled={isSubmitting}>
             <IconSearch width="40px" height="40px" />
           </IconButton>
           <input
@@ -53,5 +53,5 @@ export class SearchBar extends Component {
 
 SearchBar.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  isPending: PropTypes.bool.isRequired,
+  isSubmitting: PropTypes.bool.isRequired,
 };

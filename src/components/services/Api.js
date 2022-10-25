@@ -4,7 +4,6 @@ export class Api {
 
   constructor() {
     this.perPage = 12;
-    this.remainPages = 0;
   }
 
   async fetchImages(query, page = 1) {

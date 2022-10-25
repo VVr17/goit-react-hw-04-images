@@ -23,4 +23,5 @@ IconButton.propTypes = {
   disabled: PropTypes.bool,
   type: PropTypes.string,
   'aria-label': PropTypes.string.isRequired,
+  children: PropTypes.node,
 };
