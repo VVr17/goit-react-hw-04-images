@@ -1,44 +1,31 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Modal } from 'components/Modal/Modal';
 import css from './ImageGalleryItem.module.css';
 
-export class ImageGalleryItem extends Component {
-  state = {
-    ModalIsOpen: false,
-  };
+export const ImageGalleryItem = ({ previewImage, largeImage, tags }) => {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  openModal = () => {
-    this.setState({ ModalIsOpen: true });
-  };
+  const toggleModal = () => setModalIsOpen(prevModalState => !prevModalState);
 
-  closeModal = () => {
-    this.setState({ ModalIsOpen: false });
-  };
-
-  render() {
-    const { previewImage, largeImage, tags } = this.props;
-    const { ModalIsOpen } = this.state;
-
-    return (
-      <>
-        <li className={css.imageGalleryItem} onClick={this.openModal}>
-          <img
-            className={css.imageGalleryItemImage}
-            src={previewImage}
-            alt={tags}
-          />
-        </li>
-        {ModalIsOpen && (
-          <Modal closeModal={this.closeModal}>
-            <img src={largeImage} alt={tags} />
-            <p className={css.imageTitle}>{tags}</p>
-          </Modal>
-        )}
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <li className={css.imageGalleryItem} onClick={toggleModal}>
+        <img
+          className={css.imageGalleryItemImage}
+          src={previewImage}
+          alt={tags}
+        />
+      </li>
+      {modalIsOpen && (
+        <Modal closeModal={toggleModal}>
+          <img src={largeImage} alt={tags} />
+          <p className={css.imageTitle}>{tags}</p>
+        </Modal>
+      )}
+    </>
+  );
+};
 
 ImageGalleryItem.propTypes = {
   previewImage: PropTypes.string.isRequired,
