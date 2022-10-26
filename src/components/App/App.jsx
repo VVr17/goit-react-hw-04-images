@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { useState, useEffect } from 'react';
 import { Api } from 'components/services/Api';
 import { Button } from 'components/Button/Button';
 import { ImageGallery } from 'components/ImageGallery/ImageGallery';
@@ -15,85 +15,75 @@ const STATUS = {
   rejected: 'rejected',
 };
 
-export class App extends Component {
-  state = {
-    page: 1,
-    query: '',
-    images: [],
-    error: null,
-    loadBtnIsShown: false,
-    status: STATUS.idle,
-  };
+export function App() {
+  const [page, setPage] = useState(1);
+  const [query, setQuery] = useState('');
+  const [images, setImages] = useState([]);
+  const [error, setError] = useState(null);
+  const [loadBtnIsShown, setLoadBtnIsShown] = useState(false);
+  const [status, setStatus] = useState(STATUS.idle);
 
-  async componentDidUpdate(_, prevState) {
-    const prevQuery = prevState.query;
-    const nextQuery = this.state.query;
-    const prevPage = prevState.page;
-    const nextPage = this.state.page;
+  useEffect(() => {
+    if (!query) return;
 
-    if (prevQuery !== nextQuery || prevPage !== nextPage) {
-      this.setState({ status: STATUS.pending, loadBtnIsShown: false });
+    searchImages();
+
+    async function searchImages() {
+      setStatus(STATUS.pending);
+      setLoadBtnIsShown(false);
+
       try {
-        const images = await api.fetchImages(nextQuery, nextPage);
-        if (images.totalHits === 0) {
+        const images = await api.fetchImages(query, page);
+        const totalImages = images.totalHits;
+
+        if (!totalImages) {
           throw new Error(
             'There are no images found for your request. Please, try again'
           );
         }
 
-        const remainingPages = this.getRemainingPages(images.totalHits);
-        if (remainingPages > 0) this.setState({ loadBtnIsShown: true });
+        const remainingPages = getRemainingPages(totalImages);
+        if (remainingPages > 0) setLoadBtnIsShown(true);
 
-        this.setState(prevState => ({
-          images: [...prevState.images, ...images.hits],
-          status: STATUS.resolved,
-        }));
+        setImages(prevImages => [...prevImages, ...images.hits]);
+        setStatus(STATUS.resolved);
       } catch (error) {
-        this.setState({ error, status: STATUS.rejected });
+        setError(error);
+        setStatus(STATUS.rejected);
       }
     }
-  }
 
-  onFormSubmit = query => {
-    this.setState({ page: 1, query, images: [] });
+    function getRemainingPages(totalImages) {
+      return Math.ceil(totalImages / api.perPage) - page;
+    }
+  }, [query, page]);
+
+  const onFormSubmit = query => {
+    setPage(1);
+    setQuery(query);
+    setImages([]);
   };
 
-  onLoadBtnClick = event => {
-    this.setState(prevState => ({
-      page: prevState.page + 1,
-    }));
-  };
+  const onLoadBtnClick = event => setPage(prevPage => prevPage + 1);
 
-  getRemainingPages = totalImages => {
-    return Math.ceil(totalImages / api.perPage) - this.state.page;
-  };
+  return (
+    <div className={css.app}>
+      <SearchBar
+        onSubmit={onFormSubmit}
+        isSubmitting={status === STATUS.pending}
+      />
 
-  render() {
-    const { images, status, error, loadBtnIsShown } = this.state;
-
-    return (
-      <div className={css.app}>
-        <SearchBar
-          onSubmit={this.onFormSubmit}
-          isSubmitting={status === STATUS.pending}
-        />
-
-        {status === 'idle' && (
-          <p className={css.text}>Please, enter your request</p>
-        )}
-
-        {(status === 'pending' || status === 'resolved') && (
-          <ImageGallery images={images} />
-        )}
-
-        {status === 'pending' && <Loader />}
-
-        {loadBtnIsShown && (
-          <Button onClick={this.onLoadBtnClick}>Load More</Button>
-        )}
-
-        {status === 'rejected' && <p className={css.text}>{error.message}</p>}
-      </div>
-    );
-  }
+      {status === STATUS.idle && (
+        <p className={css.text}>Please, enter your request</p>
+      )}
+      {(status === STATUS.pending || status === STATUS.resolved) && (
+        <ImageGallery images={images} />
+      )}
+      {status === STATUS.pending && <Loader />}
+      {loadBtnIsShown && <Button onClick={onLoadBtnClick}>Load More</Button>}
+      {status === STATUS.rejected && (
+        <p className={css.text}>{error.message}</p>
+      )}
+    </div>
+  );
 }
