@@ -58,7 +58,7 @@ export function App() {
         galleryRef.current.firstElementChild.getBoundingClientRect();
 
       window.scrollBy({
-        top: cardHeight * 1,
+        top: cardHeight * 1.4,
         behavior: 'smooth',
       });
     }, 300);
