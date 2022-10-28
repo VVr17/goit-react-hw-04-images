@@ -3,7 +3,7 @@ import PropagateLoader from 'react-spinners/PropagateLoader';
 
 const override = {
   display: 'block',
-  margin: '0 auto',
+  margin: '20px auto',
 };
 const color = '#013220';
 
