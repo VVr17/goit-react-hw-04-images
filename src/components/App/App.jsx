@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Api } from 'components/services/Api';
 import { Button } from 'components/Button/Button';
 import { ImageGallery } from 'components/ImageGallery/ImageGallery';
@@ -22,6 +22,7 @@ export function App() {
   const [error, setError] = useState(null);
   const [loadBtnIsShown, setLoadBtnIsShown] = useState(false);
   const [status, setStatus] = useState(STATUS.idle);
+  const galleryRef = useRef(null);
 
   useEffect(() => {
     if (!query) return;
@@ -47,6 +48,8 @@ export function App() {
 
         setImages(prevImages => [...prevImages, ...images.hits]);
         setStatus(STATUS.resolved);
+
+        if (page > 1) smoothScroll();
       } catch (error) {
         setError(error);
         setStatus(STATUS.rejected);
@@ -58,13 +61,23 @@ export function App() {
     }
   }, [query, page]);
 
+  function smoothScroll() {
+    setTimeout(() => {
+      const { height: cardHeight } =
+        galleryRef.current.firstElementChild.getBoundingClientRect();
+
+      window.scrollBy({
+        top: cardHeight * 1.8,
+        behavior: 'smooth',
+      });
+    }, 300);
+  }
+
   const onFormSubmit = query => {
     setPage(1);
     setQuery(query);
     setImages([]);
   };
-
-  const onLoadBtnClick = event => setPage(prevPage => prevPage + 1);
 
   return (
     <div className={css.app}>
@@ -72,15 +85,16 @@ export function App() {
         onSubmit={onFormSubmit}
         isSubmitting={status === STATUS.pending}
       />
-
       {status === STATUS.idle && (
         <p className={css.text}>Please, enter your request</p>
       )}
-      {(status === STATUS.pending || status === STATUS.resolved) && (
-        <ImageGallery images={images} />
+      {images.length > 0 && <ImageGallery images={images} ref={galleryRef} />}
+      <Loader isLoading={status === STATUS.pending} />
+      {loadBtnIsShown && (
+        <Button onClick={() => setPage(prevPage => prevPage + 1)}>
+          Load More
+        </Button>
       )}
-      {status === STATUS.pending && <Loader />}
-      {loadBtnIsShown && <Button onClick={onLoadBtnClick}>Load More</Button>}
       {status === STATUS.rejected && (
         <p className={css.text}>{error.message}</p>
       )}
