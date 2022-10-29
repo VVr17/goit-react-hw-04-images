@@ -1,5 +1,5 @@
 import { useEffect, useRef, useReducer } from 'react';
-import { Api } from 'components/services/Api';
+import { Api } from 'services/Api';
 import { Button } from 'components/Button/Button';
 import { ImageGallery } from 'components/ImageGallery/ImageGallery';
 import { Loader } from 'components/Loader/Loader';
@@ -58,7 +58,7 @@ export function App() {
         galleryRef.current.firstElementChild.getBoundingClientRect();
 
       window.scrollBy({
-        top: cardHeight * 1.4,
+        top: cardHeight * 1.6,
         behavior: 'smooth',
       });
     }, 300);
